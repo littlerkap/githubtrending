@@ -2,7 +2,8 @@ import Box from "@primer/components/lib/Box";
 import Loading from "../../shared/loading/component";
 import { RepositoriesComponentProps } from "./component-props.interface";
 import RepositoryCardComponent from "../repository-card/component";
-import TrendingToolbarComponent from "../../shared/trendingToolbar/component";
+import TrendingBannerComponent from "../../shared/trending-banner/component";
+import TrendingToolbarComponent from "../../shared/trending-toolbar/component";
 import useRepositories from "../../../hooks/useRepositories";
 
 /**
@@ -15,20 +16,9 @@ export default function RepositoriesComponent({
   const { status, data, error, isFetching } = useRepositories();
 
   return (
-    <div>
-      <Box
-        bg="bg.tertiary"
-        borderColor="border.primary"
-        borderBottomWidth={1}
-        borderBottomStyle="solid"
-        p={6}
-        className="text-center"
-      >
-        <h1 className="h1">Trending</h1>
-        <p className="f4 color-text-secondary col-md-10 mx-auto">
-          See what the GitHub community is most excited about today.
-        </p>
-      </Box>
+    <>
+      {/* Banner */}
+      <TrendingBannerComponent desc="See what the GitHub community is most excited about today." />
 
       <section className="position-relative container-lg p-responsive pt-6">
         <Box
@@ -37,18 +27,11 @@ export default function RepositoriesComponent({
           borderStyle="solid"
           borderRadius={6}
         >
-          <Box
-            bg="bg.tertiary"
-            borderColor="border.primary"
-            borderBottomWidth={1}
-            borderBottomStyle="solid"
-            p={3}
-            borderTopLeftRadius={6}
-            borderTopRightRadius={6}
-          >
-            <TrendingToolbarComponent type="repositories" url={url} />
-          </Box>
-          <div>
+          {/* Toolbar */}
+          <TrendingToolbarComponent type="repositories" url={url} />
+
+          {/* Repositories Table */}
+          <>
             {status === "loading" ? (
               <Loading />
             ) : status === "error" ? (
@@ -70,9 +53,9 @@ export default function RepositoriesComponent({
                 <div>{isFetching ? <Loading /> : " "}</div>
               </>
             )}
-          </div>
+          </>
         </Box>
       </section>
-    </div>
+    </>
   );
 }

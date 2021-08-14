@@ -40,7 +40,7 @@ export default function App() {
             </Header.Item>
           </div>
         </Header>
-        <main className="f4">
+        <main>
           <Switch>
             <Route path="/" exact>
               <Redirect to="/trending" />
