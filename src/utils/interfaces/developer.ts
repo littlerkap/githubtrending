@@ -8,7 +8,7 @@ export interface DeveloperInterface {
   url: string;
   avatar: string;
   since: string;
-  popularRepository: {
+  popularRepository?: {
     repositoryName: string;
     description: string;
     url: string;
