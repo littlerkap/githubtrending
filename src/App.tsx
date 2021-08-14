@@ -17,12 +17,23 @@ import axios from "axios";
 import { config } from "./config";
 import { useIsFetching } from "react-query";
 
+/**
+ * Base URL for axios.
+ */
 axios.defaults.baseURL = config.apiBaseUrl;
 
+/**
+ * Main app component
+ */
 export default function App() {
+  /**
+   * Hook to get detils about background fetching.
+   */
   const isFetching = useIsFetching();
+
   return (
     <Router>
+      {/* App Header */}
       <Header className="f4">
         <div className="container-lg d-flex flex-1 p-responsive">
           <Header.Item mr={4}>
@@ -40,9 +51,13 @@ export default function App() {
             </NavLink>
           </Header.Item>
           <Header.Item full></Header.Item>
+
+          {/* Background fetching loader */}
           <Header.Item>{isFetching ? <Spinner /> : ""}</Header.Item>
         </div>
       </Header>
+
+      {/* App Content */}
       <main>
         <Switch>
           <Route path="/" exact>
