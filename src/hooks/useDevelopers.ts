@@ -1,12 +1,11 @@
 import { DeveloperInterface } from "../utils/interfaces/developer";
 import axios from "axios";
-import { config } from "../config";
 import { useQuery } from "react-query";
 /**
- * Async fnction to fetch developers
+ * Async function to fetch developers
  */
 const fetchDevelopers = async () => {
-  const { data } = await axios.get(`${config.apiBaseUrl}/developers`, {
+  const { data } = await axios.get("/developers", {
     headers: {
       "Access-Control-Allow-Origin": "*",
     },

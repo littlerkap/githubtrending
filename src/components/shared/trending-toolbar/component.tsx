@@ -1,7 +1,9 @@
 import Box from "@primer/components/lib/Box";
 import { NavLink } from "react-router-dom";
+import SelectFilterComponent from "../select-filter/component";
 import SubNav from "@primer/components/lib/SubNav";
 import { TrendingToolbarComponentProps } from "./component-props.interface";
+import dateRangeFilterItems from "../../../utils/data/dateRangeFilterItems";
 
 /**
  * Toolbar component for Trending pages
@@ -20,6 +22,7 @@ export default function TrendingToolbarComponent({
       p={3}
       borderTopLeftRadius={6}
       borderTopRightRadius={6}
+      className="d-md-flex flex-items-center flex-justify-between"
     >
       <SubNav aria-label="Repositories">
         <SubNav.Links>
@@ -41,6 +44,26 @@ export default function TrendingToolbarComponent({
           </NavLink>
         </SubNav.Links>
       </SubNav>
+      <Box
+        className="d-sm-flex flex-items-center flex-md-justify-end mt-3 mt-md-0 table-list-header-toggle
+          ml-n2 ml-md-0"
+      >
+        <Box position="relative" className="mb-3 mb-sm-0" mx={2}>
+          <SelectFilterComponent
+            filterItems={dateRangeFilterItems}
+            filterName="Language"
+            headerText="Select a language"
+          />
+        </Box>
+        <Box position="relative" className="mb-3 mb-sm-0" mx={2}>
+          <SelectFilterComponent
+            filterItems={dateRangeFilterItems}
+            filterName="Date Range"
+            defaultValue="daily"
+            headerText="Adjust time span"
+          />
+        </Box>
+      </Box>
     </Box>
   );
 }

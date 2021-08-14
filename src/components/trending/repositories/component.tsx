@@ -22,7 +22,6 @@ export default function RepositoriesComponent({
       <TrendingBannerComponent desc="See what the GitHub community is most excited about today." />
 
       <section className="position-relative container-lg p-responsive pt-6">
-        {/* <div>{isFetching ? <Spinner /> : " "}</div> */}
         <Box
           borderColor="border.primary"
           borderWidth={1}
@@ -35,7 +34,7 @@ export default function RepositoriesComponent({
           {/* Repositories Table */}
           <>
             {status === "loading" ? (
-              <Loading text="Fetching trending repositories..." />
+              <Loading text="Fetching trending repositories" hideSpinner />
             ) : status === "error" ? (
               <Box p={4} color="text.danger" bg="bg.danger">
                 <Text as="p" className="text-center">

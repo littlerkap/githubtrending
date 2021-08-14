@@ -32,7 +32,7 @@ export default function DevelopersComponent({ url }: DevelopersComponentProps) {
           {/* Developers Table */}
           <>
             {status === "loading" ? (
-              <Loading text="Fetching trending developers..." />
+              <Loading text="Fetching trending developers" hideSpinner />
             ) : status === "error" ? (
               <Box p={4} color="text.danger" bg="bg.danger">
                 <Text as="p" className="text-center">

@@ -13,7 +13,11 @@ import { MarkGithubIcon } from "@primer/octicons-react";
 import NotFoundPage from "./screens/not-found";
 import Spinner from "@primer/components/lib/Spinner";
 import TrendingPage from "./screens/trending";
+import axios from "axios";
+import { config } from "./config";
 import { useIsFetching } from "react-query";
+
+axios.defaults.baseURL = config.apiBaseUrl;
 
 export default function App() {
   const isFetching = useIsFetching();
