@@ -10,6 +10,10 @@ import Text from "@primer/components/lib/Text";
 import Tooltip from "@primer/components/lib/Tooltip";
 import Truncate from "@primer/components/lib/Truncate";
 
+/**
+ * Developer information card
+ * @typedef DeveloperCardProps
+ */
 export default function DeveloperCardComponent(props: DeveloperCardProps) {
   const { developer } = props;
   return (

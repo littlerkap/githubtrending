@@ -8,6 +8,10 @@ import { RepositoryCardProps } from "./component-props.interface";
 import Text from "@primer/components/lib/Text";
 import Tooltip from "@primer/components/lib/Tooltip";
 
+/**
+ * Repository information card
+ * @typedef RepositoryCardProps
+ */
 export default function RepositoryCardComponent(props: RepositoryCardProps) {
   const { repo } = props;
   return (

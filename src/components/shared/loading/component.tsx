@@ -3,6 +3,9 @@ import { LoadingProps } from "./component-props.interface";
 import Spinner from "@primer/components/lib/Spinner";
 import Text from "@primer/components/lib/Text";
 
+/**
+ * Loader Component
+ */
 export default function Loading(props: LoadingProps) {
   const { text, hideSpinner } = props;
   return (
