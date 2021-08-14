@@ -7,4 +7,5 @@ export interface TrendingToolbarComponentProps {
    * URL of current apge
    */
   url: string;
+  onFilter: (value: any) => void;
 }

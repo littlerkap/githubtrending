@@ -1,3 +1,7 @@
+import useRepositories, {
+  fetchRepositories,
+} from "../../../hooks/useRepositories";
+
 import Box from "@primer/components/lib/Box";
 import Loading from "../../shared/loading/component";
 import { RepositoriesComponentProps } from "./component-props.interface";
@@ -5,7 +9,8 @@ import RepositoryCardComponent from "../repository-card/component";
 import Text from "@primer/components/lib/Text";
 import TrendingBannerComponent from "../../shared/trending-banner/component";
 import TrendingToolbarComponent from "../../shared/trending-toolbar/component";
-import useRepositories from "../../../hooks/useRepositories";
+import { useQueryClient } from "react-query";
+import { useState } from "react";
 
 /**
  * React Clone of Github Trending Repositories https://github.com/trending
@@ -14,7 +19,24 @@ import useRepositories from "../../../hooks/useRepositories";
 export default function RepositoriesComponent({
   url,
 }: RepositoriesComponentProps) {
-  const { status, data, error } = useRepositories();
+  const queryClient = useQueryClient();
+  const [filter, setFilter] = useState({
+    since: "daily",
+    progLang: "",
+  });
+  const { status, data, error } = useRepositories(filter);
+
+  const refetchData = async (_filter: any) => {
+    setFilter((oldFilter) => ({
+      ...oldFilter,
+      ..._filter,
+    }));
+
+    await queryClient.prefetchQuery(
+      ["repositories", `since=${filter.since},progLang=${filter.progLang}`],
+      () => fetchRepositories(filter)
+    );
+  };
 
   return (
     <>
@@ -22,7 +44,6 @@ export default function RepositoriesComponent({
       <TrendingBannerComponent desc="See what the GitHub community is most excited about today." />
 
       <section className="position-relative container-lg p-responsive pt-6">
-        {/* <div>{isFetching ? <Spinner /> : " "}</div> */}
         <Box
           borderColor="border.primary"
           borderWidth={1}
@@ -30,12 +51,16 @@ export default function RepositoriesComponent({
           borderRadius={6}
         >
           {/* Toolbar */}
-          <TrendingToolbarComponent type="repositories" url={url} />
+          <TrendingToolbarComponent
+            type="repositories"
+            url={url}
+            onFilter={refetchData}
+          />
 
           {/* Repositories Table */}
           <>
             {status === "loading" ? (
-              <Loading text="Fetching trending repositories..." />
+              <Loading text="Fetching trending repositories" hideSpinner />
             ) : status === "error" ? (
               <Box p={4} color="text.danger" bg="bg.danger">
                 <Text as="p" className="text-center">
@@ -44,17 +69,25 @@ export default function RepositoriesComponent({
               </Box>
             ) : (
               <>
-                {data?.map((repo, index) => (
-                  <Box
-                    borderColor="border.primary"
-                    borderTopWidth={1}
-                    borderTopStyle="solid"
-                    p={3}
-                    key={index}
-                  >
-                    <RepositoryCardComponent repo={repo} />
+                {data && data.length > 0 ? (
+                  data?.map((repo, index) => (
+                    <Box
+                      borderColor="border.primary"
+                      borderTopWidth={1}
+                      borderTopStyle="solid"
+                      p={3}
+                      key={index}
+                    >
+                      <RepositoryCardComponent repo={repo} />
+                    </Box>
+                  ))
+                ) : (
+                  <Box p={4}>
+                    <Text as="h3" className="text-center">
+                      It looks like we don’t have any trending repositories.
+                    </Text>
                   </Box>
-                ))}
+                )}
               </>
             )}
           </>

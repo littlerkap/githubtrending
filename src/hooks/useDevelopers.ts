@@ -1,12 +1,18 @@
 import { DeveloperInterface } from "../utils/interfaces/developer";
+import { Filter } from "../utils/interfaces/filter";
 import axios from "axios";
-import { config } from "../config";
 import { useQuery } from "react-query";
+
 /**
- * Async fnction to fetch developers
+ * Async function to fetch developers
  */
-const fetchDevelopers = async () => {
-  const { data } = await axios.get(`${config.apiBaseUrl}/developers`, {
+export const fetchDevelopers = async (filter: Filter) => {
+  const queryParam = filter?.since ? `?since=${filter.since}` : "";
+  let url = "/developers";
+  if (filter.progLang) {
+    url += `/${filter.progLang}`;
+  }
+  const { data } = await axios.get(`${url}${queryParam}`, {
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
@@ -17,6 +23,12 @@ const fetchDevelopers = async () => {
 /**
  * A custom hook to fetch github trending developers.
  */
-export default function useDevelopers() {
-  return useQuery<DeveloperInterface[], Error>("developers", fetchDevelopers);
+export default function useDevelopers(filter: Filter) {
+  return useQuery<DeveloperInterface[], Error>(
+    ["developers", `since=${filter.since},progLang=${filter.progLang}`],
+    () => fetchDevelopers(filter),
+    {
+      staleTime: 5000,
+    }
+  );
 }
