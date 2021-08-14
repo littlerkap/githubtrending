@@ -10,15 +10,21 @@ export default function SelectFilterComponent(props: SelectFilterProps) {
     defaultValue,
     headerText,
     showClearButton = false,
+    onSeleted,
+    filterType,
   } = props;
   const [value, setValue] = useState(defaultValue || "");
 
   const onFilterClick = (event: any) => {
     setValue(event.target.dataset.value);
+    onSeleted({
+      [filterType]: event.target.dataset.value,
+    });
   };
 
   const onClearFilter = () => {
     setValue("");
+    onSeleted({ [filterType]: "" });
   };
 
   return (

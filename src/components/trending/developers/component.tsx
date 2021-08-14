@@ -1,3 +1,5 @@
+import useDevelopers, { fetchDevelopers } from "../../../hooks/useDevelopers";
+
 import Box from "@primer/components/lib/Box";
 import DeveloperCardComponent from "../developer-card/component";
 import { DevelopersComponentProps } from "./component-props.interface";
@@ -5,14 +7,32 @@ import Loading from "../../shared/loading/component";
 import Text from "@primer/components/lib/Text";
 import TrendingBannerComponent from "../../shared/trending-banner/component";
 import TrendingToolbarComponent from "../../shared/trending-toolbar/component";
-import useDevelopers from "../../../hooks/useDevelopers";
+import { useQueryClient } from "react-query";
+import { useState } from "react";
 
 /**
  * React Clone of Github Trending Developers https://github.com/developers
  * @typedef DevelopersComponentProps
  */
 export default function DevelopersComponent({ url }: DevelopersComponentProps) {
-  const { status, data, error } = useDevelopers();
+  const [filter, setFilter] = useState({
+    since: "daily",
+    progLang: "",
+  });
+  const { status, data, error } = useDevelopers(filter);
+  const queryClient = useQueryClient();
+
+  const refetchData = async (_filter: any) => {
+    setFilter((oldFilter) => ({
+      ...oldFilter,
+      ..._filter,
+    }));
+
+    await queryClient.prefetchQuery(
+      ["developers", `since=${filter.since},progLang=${filter.progLang}`],
+      () => fetchDevelopers(filter)
+    );
+  };
 
   return (
     <>
@@ -27,7 +47,11 @@ export default function DevelopersComponent({ url }: DevelopersComponentProps) {
           borderRadius={6}
         >
           {/* Toolbar */}
-          <TrendingToolbarComponent type="developers" url={url} />
+          <TrendingToolbarComponent
+            type="developers"
+            url={url}
+            onFilter={refetchData}
+          />
 
           {/* Developers Table */}
           <>
@@ -41,18 +65,26 @@ export default function DevelopersComponent({ url }: DevelopersComponentProps) {
               </Box>
             ) : (
               <>
-                {data?.map((dev, index) => (
-                  <Box
-                    borderColor="border.primary"
-                    borderTopWidth={1}
-                    borderTopStyle="solid"
-                    p={3}
-                    key={index}
-                    id={`pa-${dev.username}`}
-                  >
-                    <DeveloperCardComponent developer={dev} />
+                {data && data.length > 0 ? (
+                  data?.map((dev, index) => (
+                    <Box
+                      borderColor="border.primary"
+                      borderTopWidth={1}
+                      borderTopStyle="solid"
+                      p={3}
+                      key={index}
+                      id={`pa-${dev.username}`}
+                    >
+                      <DeveloperCardComponent developer={dev} />
+                    </Box>
+                  ))
+                ) : (
+                  <Box p={4}>
+                    <Text as="h3" className="text-center">
+                      It looks like we don’t have any trending developers.
+                    </Text>
                   </Box>
-                ))}
+                )}
               </>
             )}
           </>

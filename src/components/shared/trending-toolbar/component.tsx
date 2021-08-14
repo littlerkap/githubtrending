@@ -13,7 +13,16 @@ import languageFilterItems from "../../../utils/data/languageFilterItems";
 export default function TrendingToolbarComponent({
   type,
   url,
+  onFilter,
 }: TrendingToolbarComponentProps) {
+  const onLanguageSelected = (value: any) => {
+    onFilter(value);
+  };
+
+  const onDateRangeSelected = (value: any) => {
+    onFilter(value);
+  };
+
   return (
     <Box
       bg="bg.tertiary"
@@ -55,17 +64,21 @@ export default function TrendingToolbarComponent({
               label: item.label,
               value: item.label.split(" ").join("-").toLocaleLowerCase(),
             }))}
+            filterType="progLang"
             filterName="Language"
             headerText="Select a language"
             showClearButton
+            onSeleted={onLanguageSelected}
           />
         </Box>
         <Box position="relative" className="mb-3 mb-sm-0" mx={2}>
           <SelectFilterComponent
             filterItems={dateRangeFilterItems}
+            filterType="since"
             filterName="Date Range"
             defaultValue="daily"
             headerText="Adjust time span"
+            onSeleted={onDateRangeSelected}
           />
         </Box>
       </Box>
