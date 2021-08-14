@@ -1,14 +1,16 @@
 import { DeveloperInterface } from "../utils/interfaces/developer";
 import axios from "axios";
+import { config } from "../config";
 import { useQuery } from "react-query";
-
 /**
  * Async fnction to fetch developers
  */
 const fetchDevelopers = async () => {
-  const { data } = await axios.get(
-    "https://gh-trending-api.herokuapp.com/developers"
-  );
+  const { data } = await axios.get(`${config.apiBaseUrl}/developers`, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
   return data;
 };
 

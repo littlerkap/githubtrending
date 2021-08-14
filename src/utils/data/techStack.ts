@@ -11,7 +11,7 @@ const techStack = [
   { name: "Primer Design System React", link: "https://primer.style/react/" },
   {
     name: "Github Trending API",
-    link: "https://gh-trending-api.herokuapp.com/docs",
+    link: "https://gh-trending-api.herokuapp.com/redoc",
   },
   {
     name: "Icons",

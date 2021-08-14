@@ -1,6 +1,6 @@
 import AboutComponent from "../components/about/component";
 import Box from "@primer/components/lib/Box";
-import techStack from "../data/techStack";
+import techStack from "../utils/data/techStack";
 
 /**
  * About page
