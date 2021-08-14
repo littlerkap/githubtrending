@@ -1,3 +1,5 @@
+import { QueryClient, QueryClientProvider } from "react-query";
+
 import App from "./App";
 import BaseStyles from "@primer/components/lib/BaseStyles";
 import React from "react";
@@ -5,11 +7,16 @@ import ReactDOM from "react-dom";
 import ThemeProvider from "@primer/components/lib/ThemeProvider";
 import reportWebVitals from "./reportWebVitals";
 
+// Create a react query client
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider colorMode="day">
       <BaseStyles>
-        <App />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
       </BaseStyles>
     </ThemeProvider>
   </React.StrictMode>,

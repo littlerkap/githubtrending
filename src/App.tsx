@@ -6,51 +6,49 @@ import {
   BrowserRouter as Router,
   Switch,
 } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
 
 import AboutPage from "./screens/about";
 import Header from "@primer/components/lib/Header";
+import { MarkGithubIcon } from "@primer/octicons-react";
 import NotFoundPage from "./screens/not-found";
+import Spinner from "@primer/components/lib/Spinner";
 import TrendingPage from "./screens/trending";
-
-// Create a react query client
-const queryClient = new QueryClient();
+import { useIsFetching } from "react-query";
 
 export default function App() {
+  const isFetching = useIsFetching();
   return (
-    // Provide the client to your App
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <Header className="f4">
-          <div className="container-lg d-flex flex-1">
-            <Header.Item className="f3">
-              <Link to="/" className="Header-link py-1">
-                Github Trendings
-              </Link>
-            </Header.Item>
-            <Header.Item full></Header.Item>
-            <Header.Item mr={0}>
-              <NavLink
-                to="/about"
-                className="Header-link py-1"
-                activeClassName="active"
-              >
-                About
-              </NavLink>
-            </Header.Item>
-          </div>
-        </Header>
-        <main>
-          <Switch>
-            <Route path="/" exact>
-              <Redirect to="/trending" />
-            </Route>
-            <Route path="/trending" component={TrendingPage} />
-            <Route path="/about" component={AboutPage} />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </main>
-      </Router>
-    </QueryClientProvider>
+    <Router>
+      <Header className="f4">
+        <div className="container-lg d-flex flex-1 p-responsive">
+          <Header.Item mr={4}>
+            <Link to="/" className="Header-link py-1">
+              <MarkGithubIcon size={32} />
+            </Link>
+          </Header.Item>
+          <Header.Item mr={0}>
+            <NavLink
+              to="/about"
+              className="Header-link py-1"
+              activeClassName="active"
+            >
+              About
+            </NavLink>
+          </Header.Item>
+          <Header.Item full></Header.Item>
+          <Header.Item>{isFetching ? <Spinner /> : ""}</Header.Item>
+        </div>
+      </Header>
+      <main>
+        <Switch>
+          <Route path="/" exact>
+            <Redirect to="/trending" />
+          </Route>
+          <Route path="/trending" component={TrendingPage} />
+          <Route path="/about" component={AboutPage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </main>
+    </Router>
   );
 }

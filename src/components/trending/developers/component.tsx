@@ -2,15 +2,17 @@ import Box from "@primer/components/lib/Box";
 import DeveloperCardComponent from "../developer-card/component";
 import { DevelopersComponentProps } from "./component-props.interface";
 import Loading from "../../shared/loading/component";
+import Text from "@primer/components/lib/Text";
 import TrendingBannerComponent from "../../shared/trending-banner/component";
 import TrendingToolbarComponent from "../../shared/trending-toolbar/component";
 import useDevelopers from "../../../hooks/useDevelopers";
+
 /**
  * React Clone of Github Trending Developers https://github.com/developers
  * @typedef DevelopersComponentProps
  */
 export default function DevelopersComponent({ url }: DevelopersComponentProps) {
-  const { status, data, error, isFetching } = useDevelopers();
+  const { status, data, error } = useDevelopers();
 
   return (
     <>
@@ -30,9 +32,13 @@ export default function DevelopersComponent({ url }: DevelopersComponentProps) {
           {/* Developers Table */}
           <>
             {status === "loading" ? (
-              <Loading />
+              <Loading text="Fetching trending developers..." />
             ) : status === "error" ? (
-              <span>Error: {error?.message}</span>
+              <Box p={4} color="text.danger" bg="bg.danger">
+                <Text as="p" className="text-center">
+                  <span>Error: {error?.message}</span>
+                </Text>
+              </Box>
             ) : (
               <>
                 {data?.map((dev, index) => (
@@ -47,8 +53,6 @@ export default function DevelopersComponent({ url }: DevelopersComponentProps) {
                     <DeveloperCardComponent developer={dev} />
                   </Box>
                 ))}
-
-                <div>{isFetching ? <Loading /> : " "}</div>
               </>
             )}
           </>
