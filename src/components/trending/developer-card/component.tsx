@@ -8,6 +8,7 @@ import Link from "@primer/components/lib/Link";
 import StyledOcticon from "@primer/components/lib/StyledOcticon";
 import Text from "@primer/components/lib/Text";
 import Tooltip from "@primer/components/lib/Tooltip";
+import Truncate from "@primer/components/lib/Truncate";
 
 export default function DeveloperCardComponent(props: DeveloperCardProps) {
   const { developer } = props;
@@ -69,10 +70,16 @@ export default function DeveloperCardComponent(props: DeveloperCardProps) {
 
               {/* Populor Repository name */}
               <h1 className="h4 lh-condensed">
-                <Link href={developer.popularRepository?.url} target="_blank">
-                  <RepoIcon size={16} className="mr-1 color-text-secondary" />
-                  &nbsp;{developer.popularRepository?.repositoryName}
-                </Link>
+                <Truncate
+                  title={developer.popularRepository?.repositoryName}
+                  maxWidth={175}
+                >
+                  <Link href={developer.popularRepository?.url} target="_blank">
+                    <RepoIcon size={16} className="mr-1 color-text-secondary" />
+
+                    {developer.popularRepository?.repositoryName}
+                  </Link>
+                </Truncate>
               </h1>
 
               {/* Populor Repository description */}

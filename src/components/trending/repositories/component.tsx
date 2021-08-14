@@ -2,6 +2,7 @@ import Box from "@primer/components/lib/Box";
 import Loading from "../../shared/loading/component";
 import { RepositoriesComponentProps } from "./component-props.interface";
 import RepositoryCardComponent from "../repository-card/component";
+import Text from "@primer/components/lib/Text";
 import TrendingBannerComponent from "../../shared/trending-banner/component";
 import TrendingToolbarComponent from "../../shared/trending-toolbar/component";
 import useRepositories from "../../../hooks/useRepositories";
@@ -13,7 +14,7 @@ import useRepositories from "../../../hooks/useRepositories";
 export default function RepositoriesComponent({
   url,
 }: RepositoriesComponentProps) {
-  const { status, data, error, isFetching } = useRepositories();
+  const { status, data, error } = useRepositories();
 
   return (
     <>
@@ -21,6 +22,7 @@ export default function RepositoriesComponent({
       <TrendingBannerComponent desc="See what the GitHub community is most excited about today." />
 
       <section className="position-relative container-lg p-responsive pt-6">
+        {/* <div>{isFetching ? <Spinner /> : " "}</div> */}
         <Box
           borderColor="border.primary"
           borderWidth={1}
@@ -33,9 +35,13 @@ export default function RepositoriesComponent({
           {/* Repositories Table */}
           <>
             {status === "loading" ? (
-              <Loading />
+              <Loading text="Fetching trending repositories..." />
             ) : status === "error" ? (
-              <span>Error: {error?.message}</span>
+              <Box p={4} color="text.danger" bg="bg.danger">
+                <Text as="p" className="text-center">
+                  <span>Error: {error?.message}</span>
+                </Text>
+              </Box>
             ) : (
               <>
                 {data?.map((repo, index) => (
@@ -49,8 +55,6 @@ export default function RepositoriesComponent({
                     <RepositoryCardComponent repo={repo} />
                   </Box>
                 ))}
-
-                <div>{isFetching ? <Loading /> : " "}</div>
               </>
             )}
           </>
