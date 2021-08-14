@@ -1,15 +1,24 @@
 import Dropdown from "@primer/components/lib/Dropdown";
 import { SelectFilterProps } from "./component-props.interface";
 import SelectMenu from "@primer/components/lib/SelectMenu/SelectMenu";
+import Text from "@primer/components/lib/Text";
 import { useState } from "react";
-
 export default function SelectFilterComponent(props: SelectFilterProps) {
-  const { filterItems, filterName, defaultValue, headerText } = props;
+  const {
+    filterItems,
+    filterName,
+    defaultValue,
+    headerText,
+    showClearButton = false,
+  } = props;
   const [value, setValue] = useState(defaultValue || "");
 
   const onFilterClick = (event: any) => {
-    console.log(event.target.dataset);
     setValue(event.target.dataset.value);
+  };
+
+  const onClearFilter = () => {
+    setValue("");
   };
 
   return (
@@ -25,6 +34,14 @@ export default function SelectFilterComponent(props: SelectFilterProps) {
         {headerText && <SelectMenu.Header>{headerText}</SelectMenu.Header>}
 
         <SelectMenu.List>
+          {showClearButton && value && (
+            <SelectMenu.Item onClick={onClearFilter}>
+              <Text className="text-bold" color="text.danger">
+                Clear {filterName}
+              </Text>
+            </SelectMenu.Item>
+          )}
+
           {filterItems.map((filterItem, index) => (
             <SelectMenu.Item
               key={index}

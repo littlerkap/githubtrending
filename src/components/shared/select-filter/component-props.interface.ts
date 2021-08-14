@@ -6,4 +6,5 @@ export interface SelectFilterProps {
   }[];
   defaultValue?: string;
   headerText?: string;
+  showClearButton?: boolean;
 }

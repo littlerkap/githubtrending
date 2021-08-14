@@ -4,6 +4,7 @@ import SelectFilterComponent from "../select-filter/component";
 import SubNav from "@primer/components/lib/SubNav";
 import { TrendingToolbarComponentProps } from "./component-props.interface";
 import dateRangeFilterItems from "../../../utils/data/dateRangeFilterItems";
+import languageFilterItems from "../../../utils/data/languageFilterItems";
 
 /**
  * Toolbar component for Trending pages
@@ -50,9 +51,13 @@ export default function TrendingToolbarComponent({
       >
         <Box position="relative" className="mb-3 mb-sm-0" mx={2}>
           <SelectFilterComponent
-            filterItems={dateRangeFilterItems}
+            filterItems={languageFilterItems.map((item) => ({
+              label: item.label,
+              value: item.label.split(" ").join("-").toLocaleLowerCase(),
+            }))}
             filterName="Language"
             headerText="Select a language"
+            showClearButton
           />
         </Box>
         <Box position="relative" className="mb-3 mb-sm-0" mx={2}>
