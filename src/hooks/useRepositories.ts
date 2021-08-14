@@ -1,14 +1,17 @@
 import { RepositoryInterface } from "../utils/interfaces/repository";
 import axios from "axios";
+import { config } from "../config";
 import { useQuery } from "react-query";
 
 /**
  * Async fnction to fetch repositories
  */
 const fetchRepositories = async () => {
-  const { data } = await axios.get(
-    "https://gh-trending-api.herokuapp.com/repositories"
-  );
+  const { data } = await axios.get(`${config.apiBaseUrl}/repositories`, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
   return data;
 };
 
