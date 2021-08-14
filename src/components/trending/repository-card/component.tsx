@@ -2,7 +2,7 @@ import { RepoForkedIcon, RepoIcon, StarIcon } from "@primer/octicons-react";
 
 import Avatar from "@primer/components/lib/Avatar";
 import Box from "@primer/components/lib/Box";
-import Button from "@primer/components/lib/Button";
+import Button from "@primer/components/lib/Button/Button";
 import Link from "@primer/components/lib/Link";
 import { RepositoryCardProps } from "./component-props.interface";
 import Text from "@primer/components/lib/Text";
@@ -14,7 +14,10 @@ export default function RepositoryCardComponent(props: RepositoryCardProps) {
     <>
       {/* Action: Star Repository */}
       <Box className="float-right d-flex">
-        <Tooltip aria-label={`Star ${repo.username}/${repo.repositoryName}`}>
+        <Tooltip
+          aria-label={`Star ${repo.username}/${repo.repositoryName}`}
+          direction="s"
+        >
           <Button
             variant="small"
             sx={{ height: "28px" }}
@@ -84,9 +87,8 @@ export default function RepositoryCardComponent(props: RepositoryCardProps) {
               target="_blank"
               ml="1"
               className="d-inline-block"
-              title={user.username}
             >
-              <Tooltip aria-label={user.username}>
+              <Tooltip aria-label={user.username} direction="s">
                 <Avatar src={user.avatar} />
               </Tooltip>
             </Link>

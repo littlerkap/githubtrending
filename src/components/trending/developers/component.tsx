@@ -42,6 +42,7 @@ export default function DevelopersComponent({ url }: DevelopersComponentProps) {
                     borderTopStyle="solid"
                     p={3}
                     key={index}
+                    id={`pa-${dev.username}`}
                   >
                     <DeveloperCardComponent developer={dev} />
                   </Box>
