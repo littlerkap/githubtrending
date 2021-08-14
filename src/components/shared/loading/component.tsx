@@ -5,6 +5,7 @@ import Text from "@primer/components/lib/Text";
 
 /**
  * Loader Component
+ * @typedef LoadingProps
  */
 export default function Loading(props: LoadingProps) {
   const { text, hideSpinner } = props;

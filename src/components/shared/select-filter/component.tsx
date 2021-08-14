@@ -6,6 +6,7 @@ import { useState } from "react";
 
 /**
  * Custom select box with filter options
+ * @typedef SelectFilterProps
  */
 export default function SelectFilterComponent(props: SelectFilterProps) {
   const {
