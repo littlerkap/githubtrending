@@ -81,7 +81,9 @@ export default function DeveloperCardComponent(props: DeveloperCardProps) {
               </Text>
             </Box>
           ) : (
-            ""
+            <Text as="div" className="f6 color-text-secondary" mb={1}>
+              No Popular Repository for {developer.name}
+            </Text>
           )}
         </Box>
         <Box className="col-sm-4 d-flex flex-sm-justify-end ml-sm-3">
