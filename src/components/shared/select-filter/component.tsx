@@ -3,6 +3,11 @@ import { SelectFilterProps } from "./component-props.interface";
 import SelectMenu from "@primer/components/lib/SelectMenu/SelectMenu";
 import Text from "@primer/components/lib/Text";
 import { useState } from "react";
+
+/**
+ * Custom select box with filter options
+ * @typedef SelectFilterProps
+ */
 export default function SelectFilterComponent(props: SelectFilterProps) {
   const {
     filterItems,
@@ -15,6 +20,9 @@ export default function SelectFilterComponent(props: SelectFilterProps) {
   } = props;
   const [value, setValue] = useState(defaultValue || "");
 
+  /**
+   * Set filter value
+   */
   const onFilterClick = (event: any) => {
     setValue(event.target.dataset.value);
     onSeleted({
@@ -22,6 +30,9 @@ export default function SelectFilterComponent(props: SelectFilterProps) {
     });
   };
 
+  /**
+   * Clears the filter value
+   */
   const onClearFilter = () => {
     setValue("");
     onSeleted({ [filterType]: "" });
@@ -29,6 +40,7 @@ export default function SelectFilterComponent(props: SelectFilterProps) {
 
   return (
     <SelectMenu css={{ display: "block" }}>
+      {/* Dropdown trigger */}
       <summary>
         {filterName}: &nbsp;
         <span className="text-bold">
@@ -36,9 +48,13 @@ export default function SelectFilterComponent(props: SelectFilterProps) {
           <Dropdown.Caret m={0} />
         </span>
       </summary>
+
+      {/* Dropdown */}
       <SelectMenu.Modal align="right">
+        {/* Dropdown Header */}
         {headerText && <SelectMenu.Header>{headerText}</SelectMenu.Header>}
 
+        {/* Clear button */}
         <SelectMenu.List>
           {showClearButton && value && (
             <SelectMenu.Item onClick={onClearFilter}>
@@ -47,7 +63,7 @@ export default function SelectFilterComponent(props: SelectFilterProps) {
               </Text>
             </SelectMenu.Item>
           )}
-
+          {/* Dropdown items */}
           {filterItems.map((filterItem, index) => (
             <SelectMenu.Item
               key={index}

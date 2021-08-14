@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Text from "@primer/components/lib/Text";
 
 /**
- * Fallback page
+ * 404 page
  */
 export default function NotFoundPage() {
   return (

@@ -7,7 +7,7 @@ import RepositoriesComponent from "../components/trending/repositories/component
 
 /**
  * Trending page.
- * This page has nested router for 'trending/developer' and with filter query params
+ * This page has nested router. E.g. 'trending/developer'
  */
 export default function TrendingPage() {
   let { path, url } = useRouteMatch();

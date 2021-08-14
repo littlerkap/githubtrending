@@ -26,7 +26,11 @@ export default function RepositoriesComponent({
   });
   const { status, data, error } = useRepositories(filter);
 
-  const refetchData = async (_filter: any) => {
+  /**
+   * Async function to refetch Repositories on filter change
+   * @param _filter {object}
+   */
+  const refetchRepos = async (_filter: any) => {
     setFilter((oldFilter) => ({
       ...oldFilter,
       ..._filter,
@@ -54,7 +58,7 @@ export default function RepositoriesComponent({
           <TrendingToolbarComponent
             type="repositories"
             url={url}
-            onFilter={refetchData}
+            onFilter={refetchRepos}
           />
 
           {/* Repositories Table */}

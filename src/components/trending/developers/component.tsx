@@ -22,7 +22,11 @@ export default function DevelopersComponent({ url }: DevelopersComponentProps) {
   const { status, data, error } = useDevelopers(filter);
   const queryClient = useQueryClient();
 
-  const refetchData = async (_filter: any) => {
+  /**
+   * Async function to refetch Developers on filter change
+   * @param _filter {object}
+   */
+  const refetchDevs = async (_filter: any) => {
     setFilter((oldFilter) => ({
       ...oldFilter,
       ..._filter,
@@ -50,7 +54,7 @@ export default function DevelopersComponent({ url }: DevelopersComponentProps) {
           <TrendingToolbarComponent
             type="developers"
             url={url}
-            onFilter={refetchData}
+            onFilter={refetchDevs}
           />
 
           {/* Developers Table */}

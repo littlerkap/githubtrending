@@ -15,11 +15,11 @@ export default function TrendingToolbarComponent({
   url,
   onFilter,
 }: TrendingToolbarComponentProps) {
-  const onLanguageSelected = (value: any) => {
-    onFilter(value);
-  };
-
-  const onDateRangeSelected = (value: any) => {
+  /**
+   * Call onFilter function of props
+   * @param value {string} filter value
+   */
+  const onSelected = (value: any) => {
     onFilter(value);
   };
 
@@ -35,6 +35,7 @@ export default function TrendingToolbarComponent({
       className="d-md-flex flex-items-center flex-justify-between"
     >
       <SubNav aria-label="Repositories">
+        {/* Nav links */}
         <SubNav.Links>
           <NavLink
             to={`${url}`}
@@ -58,6 +59,7 @@ export default function TrendingToolbarComponent({
         className="d-sm-flex flex-items-center flex-md-justify-end mt-3 mt-md-0 table-list-header-toggle
           ml-n2 ml-md-0"
       >
+        {/* Language Filter */}
         <Box position="relative" className="mb-3 mb-sm-0" mx={2}>
           <SelectFilterComponent
             filterItems={languageFilterItems.map((item) => ({
@@ -68,9 +70,11 @@ export default function TrendingToolbarComponent({
             filterName="Language"
             headerText="Select a language"
             showClearButton
-            onSeleted={onLanguageSelected}
+            onSeleted={onSelected}
           />
         </Box>
+
+        {/* Date Range Filter */}
         <Box position="relative" className="mb-3 mb-sm-0" mx={2}>
           <SelectFilterComponent
             filterItems={dateRangeFilterItems}
@@ -78,7 +82,7 @@ export default function TrendingToolbarComponent({
             filterName="Date Range"
             defaultValue="daily"
             headerText="Adjust time span"
-            onSeleted={onDateRangeSelected}
+            onSeleted={onSelected}
           />
         </Box>
       </Box>
