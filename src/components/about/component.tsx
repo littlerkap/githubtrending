@@ -31,7 +31,7 @@ export default function AboutComponent({
           target="_blank"
           rel="noreferrer"
         >
-          GitHub Trends
+          GitHub Trending
         </Link>
       </Heading>
 
