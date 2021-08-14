@@ -1,6 +1,20 @@
-# Getting Started with Create React App
+# GitHub Trends
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Check it out here: [GitHub Trends](https://littlerkap-githubtrending.netlify.app/)
+
+This app is deployed to production from Netlify (Changes on master branch will be automatically deployed to production by Netlify Bot)
+
+If you face Cross-Origin Resource Sharing (CORS) issue you can follow this guide to [Run Chrome browser without CORS](https://alfilatov.com/posts/run-chrome-without-cors/)
+
+#### `open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security`
+
+## Technologies used:
+
+- [React JS](https://reactjs.org)
+- [React Router](https://reactrouter.com/web/guides/quick-start)
+- [React Query](https://react-query.tanstack.com)
+- [Primer React (GitHub’s design system)](https://primer.style/react/)
+- [Octicons](https://primer.style/octicons/)
 
 ## Available Scripts
 
