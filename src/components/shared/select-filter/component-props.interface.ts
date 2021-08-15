@@ -33,6 +33,10 @@ export interface SelectFilterProps {
    */
   showClearButton?: boolean;
   /**
+   * To show search input
+   */
+  showSearch?: boolean;
+  /**
    * Function with selected value
    */
   onSeleted: (value: any) => void;
