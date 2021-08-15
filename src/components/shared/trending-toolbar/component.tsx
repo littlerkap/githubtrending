@@ -70,6 +70,7 @@ export default function TrendingToolbarComponent({
             filterName="Language"
             headerText="Select a language"
             showClearButton
+            showSearch
             onSeleted={onSelected}
           />
         </Box>

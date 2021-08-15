@@ -2,8 +2,8 @@ import Dropdown from "@primer/components/lib/Dropdown";
 import { SelectFilterProps } from "./component-props.interface";
 import SelectMenu from "@primer/components/lib/SelectMenu/SelectMenu";
 import Text from "@primer/components/lib/Text";
+import _ from "lodash";
 import { useState } from "react";
-
 /**
  * Custom select box with filter options
  * @typedef SelectFilterProps
@@ -15,26 +15,33 @@ export default function SelectFilterComponent(props: SelectFilterProps) {
     defaultValue,
     headerText,
     showClearButton = false,
-    onSeleted,
     filterType,
+    showSearch,
+    onSeleted,
   } = props;
   const [value, setValue] = useState(defaultValue || "");
+  const [search, setSearch] = useState("");
+
+  const onSearch = (event: any) => {
+    setSearch(event.target.value);
+  };
 
   /**
    * Set filter value
    */
-  const onFilterClick = (event: any) => {
+  const onFilterClick = _.debounce((event: any) => {
     setValue(event.target.dataset.value);
     onSeleted({
       [filterType]: event.target.dataset.value,
     });
-  };
+  }, 300);
 
   /**
    * Clears the filter value
    */
   const onClearFilter = () => {
     setValue("");
+    setSearch("");
     onSeleted({ [filterType]: "" });
   };
 
@@ -54,6 +61,16 @@ export default function SelectFilterComponent(props: SelectFilterProps) {
         {/* Dropdown Header */}
         {headerText && <SelectMenu.Header>{headerText}</SelectMenu.Header>}
 
+        {/* Search */}
+        {showSearch && (
+          <SelectMenu.Filter
+            placeholder={`Search ${filterName}`}
+            aria-label={`Search ${filterName}`}
+            onInput={onSearch}
+            value={search}
+          />
+        )}
+
         {/* Clear button */}
         <SelectMenu.List>
           {showClearButton && value && (
@@ -64,17 +81,21 @@ export default function SelectFilterComponent(props: SelectFilterProps) {
             </SelectMenu.Item>
           )}
           {/* Dropdown items */}
-          {filterItems.map((filterItem, index) => (
-            <SelectMenu.Item
-              key={index}
-              selected={value === filterItem.value}
-              data-value={filterItem.value}
-              data-label={filterItem.label}
-              onClick={onFilterClick}
-            >
-              {filterItem.label}
-            </SelectMenu.Item>
-          ))}
+          {filterItems
+            .filter((item) => {
+              return item.label.toLowerCase().indexOf(search) !== -1;
+            })
+            .map((filterItem, index) => (
+              <SelectMenu.Item
+                key={index}
+                selected={value === filterItem.value}
+                data-value={filterItem.value}
+                data-label={filterItem.label}
+                onClick={onFilterClick}
+              >
+                {filterItem.label}
+              </SelectMenu.Item>
+            ))}
         </SelectMenu.List>
       </SelectMenu.Modal>
     </SelectMenu>
